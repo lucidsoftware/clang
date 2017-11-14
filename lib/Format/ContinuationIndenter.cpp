@@ -222,8 +222,10 @@ bool ContinuationIndenter::canBreak(const LineState &State) {
       State.Stack.back().NoLineBreakInOperand)
     return false;
 
-  if(Current.is(tok::r_paren) && !State.Stack.back().BreakBeforeClosingParen)
-    return false;
+  if (Style.DanglingParenthesis) {
+    if (Current.is(tok::r_paren) && !State.Stack.back().BreakBeforeClosingParen)
+      return false;
+  }
 
   return !State.Stack.back().NoLineBreak;
 }
